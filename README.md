@@ -258,16 +258,28 @@ With `addBodyClasses` set to `true` in your initialize options, one of the two c
 ### - How do I make a toggle button?
 Toggles have been a popular request, but rather than bog the library down with additional methods, you can utilize the powerful API of Snap.js to create your own toggle. Toggles can be done like the following:
 
+
+#### Add Event Listener
 ```javascript
-myToggleButton.addEventListener('click', function(){
+var addEvent = function addEvent(element, eventName, func) {
+        if (element.addEventListener) {
+            return element.addEventListener(eventName, func, false);
+        } else if (element.attachEvent) {
+            return element.attachEvent("on" + eventName, func);
+        }
+    };
+```
 
-    if( snapper.state().state=="left" ){
-        snapper.close();
-    } else {
-        snapper.open('left');
-    }
-
+#### Add Toggle Event
+```javascript
+addEvent(document.getElementById('open-right'), 'click', function() {
+    snapper.open('right');
 });
+```
+
+#### Event Toggle Markup
+```html
+<a href="#" id="open-right">Toggle</a>
 ```
 
 ### - How do I disable Snap.js dragging for my touch slider?
